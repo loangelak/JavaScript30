@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoped CSS Variables and JS</title>
+</head>
+<body>
+  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+
+  <div class="controls">
+    <label for="spacing">Spacing:</label><br>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px"><br>
+
+    <label for="blur">Blur:</label><br>
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px"><br>
+
+    <label for="base">Base Color</label><br>
+    <input id="base" type="color" name="base" value="#ffc600">
+  </div>
+
+  <img src="spider.jpg" alt='Spider'><!--PHOTO CREDIT: HANNIBAL & CO.-->
+
+  <style>
+      :root{
+          --base: #ffc600; 
+          --spacing: 10px; 
+          --blur: 10px;
+      }
+      img{
+          padding: var(--spacing);
+          background: var(--base);
+          filter: blur(var(--blur));
+      }
+      .hl{
+          color: var(--base);
+      }
+    /*
+      misc styles, nothing to do with CSS variables
+    */
+    body {
+      text-align: center;
+      background: #193549;
+      color: white;
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 1.3rem;
+    }
+    .controls {
+      margin-bottom: 50px;
+    }
+    input {
+      width:100px;
+    }
+      input[type=range]{
+          border: 1px solid transparent; 
+          width: 300px; 
+      }
+      input[type=range]:focus {
+          outline: none;
+}
+      input[type='color']{
+          border-radius: 0; 
+          background-color: #fff; 
+          border: 1px solid #dce6e9; 
+          height: 2.4rem; 
+          padding: 0.5rem; 
+          width: 100px; 
+          margin: 4px; 
+          box-shadow: none; 
+      }
+  </style>
+
+  <script>
+      const inputs = document.querySelectorAll('.controls input');
+      
+      function handleUpdate(){
+          console.log(this.value);
+          const suffix = this.dataset.sizing || ''; 
+          //console.log(suffix);
+          //console.log(this.dataset)//takes everything that has data 
+          //update variable - how do we select variable? see below 
+          //console.log(this.name)
+          document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+      }
+      
+      inputs.forEach(input => input.addEventListener('change', handleUpdate));
+      inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+      
+  </script>
+
+</body>
+</html>
