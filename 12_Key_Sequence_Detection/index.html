@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Key Detection | Javascript30</title>
+        <script type = 'text/javascript' src='http://www.cornify.com/js/cornify.js'></script>
+    </head>
+    
+    <body>
+        
+        <script>
+            const pressed = [];
+            const secretCode='hannibal';
+            
+            window.addEventListener('keyup', (e)=>{
+                console.log(e.key);//logs keys pressed
+                pressed.push(e.key);
+                pressed.splice(-secretCode.length -1, pressed.length - secretCode.length); //trim array to max of what needed max 6 char
+                if(pressed.join('').includes(secretCode)){
+                    console.log('DING DING!');
+                    cornify_add(); 
+                }
+                console.log(pressed); 
+            });
+        </script>
+    </body>
+</html>
